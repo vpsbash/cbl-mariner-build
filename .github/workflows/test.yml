@@ -1,0 +1,59 @@
+name: CBL-Mariner
+
+on: 
+  release:
+    types: [published]
+  push:
+    branches: 
+      - master
+  schedule:
+    - cron: 0 0,6,12,18 * * *
+
+env:
+
+  
+jobs:
+
+  build:
+
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: master
+
+      - name: Space cleanup
+        env:
+
+        run: |
+          docker rmi `docker images -q`
+          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
+          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
+          sudo -E add-apt-repository -y ppa:longsleep/golang-backports
+          sudo -E apt-get update
+          sudo -E apt -y install make tar wget curl rpm qemu-utils golang-1.15-go genisoimage python-minimal bison gawk parted
+          sudo -E apt -y install pigz
+		  sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get clean
+          sudo ln -vsf /usr/lib/go-1.15/bin/go /usr/bin/go
+		  curl -fsSL https://get.docker.com -o get-docker.sh
+          sudo sh get-docker.sh
+          sudo usermod -aG docker $USER
+          df -h
+      - name: Clone source code
+        run: |
+          git clone https://github.com/microsoft/CBL-Mariner.git
+      
+      - name: Compile firmware
+        run: |
+          cd CBL-Mariner
+		  cd toolkit
+		  sudo make iso REBUILD_TOOLS=y REBUILD_PACKAGES=n CONFIG_FILE=./imageconfigs/full.json
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: CBL-Mariner ISO
+          path: CBL-Mariner/bin/
