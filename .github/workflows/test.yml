@@ -35,10 +35,10 @@ jobs:
           sudo -E apt-get update
           sudo -E apt -y install make tar wget curl rpm qemu-utils golang-1.15-go genisoimage python-minimal bison gawk parted
           sudo -E apt -y install pigz
-		  sudo -E apt-get -y autoremove --purge
+          sudo -E apt-get -y autoremove --purge
           sudo -E apt-get clean
           sudo ln -vsf /usr/lib/go-1.15/bin/go /usr/bin/go
-		  curl -fsSL https://get.docker.com -o get-docker.sh
+          curl -fsSL https://get.docker.com -o get-docker.sh
           sudo sh get-docker.sh
           sudo usermod -aG docker $USER
           df -h
@@ -49,8 +49,8 @@ jobs:
       - name: Compile firmware
         run: |
           cd CBL-Mariner
-		  cd toolkit
-		  sudo make iso REBUILD_TOOLS=y REBUILD_PACKAGES=n CONFIG_FILE=./imageconfigs/full.json
+          cd toolkit
+          sudo make iso REBUILD_TOOLS=y REBUILD_PACKAGES=n CONFIG_FILE=./imageconfigs/full.json
 
       - name: Upload artifact
         uses: actions/upload-artifact@master
