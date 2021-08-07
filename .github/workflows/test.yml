@@ -24,11 +24,8 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Space cleanup
+      - name: Install Prerequisites
         run: |
-          docker rmi `docker images -q`
-          sudo rm -rf /usr/share/dotnet /etc/mysql /etc/php /etc/apt/sources.list.d
-          sudo -E apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* mysql* php*
           sudo -E add-apt-repository -y ppa:longsleep/golang-backports
           sudo -E apt-get update
           sudo -E apt -y install make tar wget curl rpm qemu-utils golang-1.15-go genisoimage python-minimal bison gawk parted
