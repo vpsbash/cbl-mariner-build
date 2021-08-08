@@ -53,4 +53,4 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: CBL-Mariner ISO
-          path: CBL-Mariner/bin/
+          path: CBL-Mariner/out/
