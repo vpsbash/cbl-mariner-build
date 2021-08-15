@@ -26,13 +26,9 @@ jobs:
 
       - name: Install Prerequisites
         run: |
-          wget https://golang.org/dl/go1.16.7.linux-amd64.tar.gz
-          sudo tar -C /usr/local -xvzf go1.16.7.linux-amd64.tar.gz
-          export PATH=$PATH:/usr/local/go/bin
-          mkdir -p /tmp/gobuild/
+          sudo -E apt install golang -y
           git clone https://git.zx2c4.com/wireguard-go
           cd wireguard-go
-          export GOPATH="/tmp/gobuild/"
           go build -v -o "wireguard-go"
           mkdir bin
           cp wireguard-go bin/
