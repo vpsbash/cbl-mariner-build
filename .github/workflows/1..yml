@@ -1,4 +1,4 @@
-name: CBL-Mariner
+name: CBL-Mariner 1.0
 
 on: 
   release:
@@ -16,7 +16,7 @@ jobs:
 
   build:
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout
@@ -44,7 +44,7 @@ jobs:
       - name: Compile firmware
         run: |
           cd CBL-Mariner
-          git checkout 1.0-stable
+          git checkout 1.
           git checkout
           cd toolkit
           sudo make iso REBUILD_TOOLS=y REBUILD_PACKAGES=n CONFIG_FILE=./imageconfigs/full.json
