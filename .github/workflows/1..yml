@@ -44,7 +44,7 @@ jobs:
       - name: Compile firmware
         run: |
           cd CBL-Mariner
-          git checkout 1.
+          git checkout 1.0-stable
           git checkout
           cd toolkit
           sudo make iso REBUILD_TOOLS=y REBUILD_PACKAGES=n CONFIG_FILE=./imageconfigs/full.json
