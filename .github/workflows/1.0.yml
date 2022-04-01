@@ -37,9 +37,11 @@ jobs:
           sudo sh get-docker.sh
           sudo usermod -aG docker $USER
           df -h
+
       - name: Clone source code
         run: |
           git clone -b 1.0 https://github.com/microsoft/CBL-Mariner.git
+          git checkout 1.0-stable
       
       - name: Compile firmware
         run: |
